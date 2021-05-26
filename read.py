@@ -1,9 +1,11 @@
+import urllib.request, json
 from evdev import InputDevice, categorize, ecodes
-dev = InputDevice('/dev/input/event8') # scanner
-#dev = InputDevice('/dev/input/event0') # keyboard
+#dev = InputDevice('/dev/input/event8') # scanner
+dev = InputDevice('/dev/input/event0') # keyboard
 
 print(dev)
 inpt = ""
+founded = False
 scancodes = {
     # Scancode: ASCIICode
     0: None, 1: u'ESC', 2: u'1', 3: u'2', 4: u'3', 5: u'4', 6: u'5', 7: u'6', 8: u'7', 9: u'8',
@@ -11,16 +13,28 @@ scancodes = {
     20: u'T', 21: u'Y', 22: u'U', 23: u'I', 24: u'O', 25: u'P', 26: u'[', 27: u']', 28: u'CRLF', 29: u'LCTRL',
     30: u'A', 31: u'S', 32: u'D', 33: u'F', 34: u'G', 35: u'H', 36: u'J', 37: u'K', 38: u'L', 39: u';',
     40: u'"', 41: u'`', 42: u'LSHFT', 43: u'\\', 44: u'Z', 45: u'X', 46: u'C', 47: u'V', 48: u'B', 49: u'N',
-    50: u'M', 51: u',', 52: u'.', 53: u'/', 54: u'RSHFT', 56: u'LALT', 100: u'RALT'
+    50: u'M', 51: u',', 52: u'.', 53: u'/', 54: u'RSHFT', 56: u'LALT', 57: u' ', 100: u'RALT'
 }
+
+with urllib.request.urlopen("http://192.168.1.12:3000/getdata") as url:
+    datas = json.loads(url.read().decode())
+
+def cmp_data(q):
+    for data in datas:
+        code = format(data[0])
+        label = format(data[1])
+        if q in code or q in label:
+            print(data)
+
 
 for event in dev.read_loop():
     if event.type == ecodes.EV_KEY:
         data = categorize(event)  # Save the event temporarily to introspect it
         if data.keystate == 1:  # Down events only
-            key_lookup = scancodes.get(data.scancode) or ('UNKNOWN: '+format(data.scancode))  # Lookup or return UNKNOWN:XX
-            print ('You Pressed the key! '+format(key_lookup))  # Print it all out!
-            if format(key_lookup) == "CRLF":
-                print(inpt)
+            key_lookup = scancodes.get(data.scancode) or ('UNKNOWN: {}'.format(data.scancode))  # Lookup or return UNKNOWN:XX
+            print('You Pressed the {} key! '.format(key_lookup))  # Print it all out!
+            if key_lookup == "CRLF":
+                cmp_data(inpt)
+                inpt = ""
             else:
-                inpt += format(key_lookup)
+                inpt += key_lookup
