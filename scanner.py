@@ -1,9 +1,14 @@
+import PySimpleGUI as sg
 import urllib.request, json
 from evdev import InputDevice, categorize, ecodes
-#dev = InputDevice('/dev/input/event8') # scanner
-dev = InputDevice('/dev/input/event0') # keyboard
+
+# define device
+dev = InputDevice('/dev/input/event8') # scanner
+#dev = InputDevice('/dev/input/event0') # keyboard
 
 print(dev) # print the current device
+
+# defines
 inpt = ""
 DATA_URL = "http://192.168.1.12:3000/getdata"
 scancodes = {
@@ -30,6 +35,7 @@ def cmp_data(q):
         price = format(data[2])
 
         if q in code or q in label:
+            
             search = code + " " + label + " " +  price
             break
 
@@ -39,15 +45,16 @@ def cmp_data(q):
         print("not found")
 # end func
 
-
+# reading input from device
 for event in dev.read_loop():
     if event.type == ecodes.EV_KEY:
         data = categorize(event)  # Save the event temporarily to introspect it
         if data.keystate == 1:  # Down events only
             key_lookup = scancodes.get(data.scancode) or ('UNKNOWN: {}'.format(data.scancode))  # Lookup or return UNKNOWN:XX
-            print('You Pressed the {} key! '.format(key_lookup))  # Print it all out!
-            if key_lookup == "CRLF":
+            #print('You Pressed the {} key! '.format(key_lookup))  # Print it all out!
+            if key_lookup == "CRLF" and inpt:   
                 cmp_data(inpt)
                 inpt = ""
             else:
                 inpt += key_lookup
+# end reading input

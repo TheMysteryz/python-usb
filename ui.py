@@ -1,12 +1,13 @@
 import PySimpleGUI as sg
 
-layout = [[sg.Text("Hello from PySimpleGUI")], [sg.Button("OK")]]
+layout = [[sg.Text("Hello from PySimpleGUI")], [sg.Text("hahaha")], [sg.Button("OK")]]
 
 # Create the window
 window = sg.Window(
             "Demo",
             layout,
             background_color = "#f00",
+            element_justification = "center",
             size = (200, 100)
         )
 
