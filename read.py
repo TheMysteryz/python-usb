@@ -1,4 +1,5 @@
 import urllib.request, json
+import pyperclip
 from evdev import InputDevice, categorize, ecodes
 #dev = InputDevice('/dev/input/event8') # scanner
 dev = InputDevice('/dev/input/event0') # keyboard
@@ -45,9 +46,16 @@ for event in dev.read_loop():
         data = categorize(event)  # Save the event temporarily to introspect it
         if data.keystate == 1:  # Down events only
             key_lookup = scancodes.get(data.scancode) or ('UNKNOWN: {}'.format(data.scancode))  # Lookup or return UNKNOWN:XX
+            code = data.scancode
             print('You Pressed the {} key! '.format(key_lookup))  # Print it all out!
+            print(code)
+			# 2 - 11, 16 - 25, 30 - 38, 44 - 50
             if key_lookup == "CRLF":
-                cmp_data(inpt)
+                # cmp_data(inpt)
+                print(inpt)
+                pyperclip.copy(inpt)
                 inpt = ""
-            else:
+            elif key_lookup == "BKSP":
+                inpt = ""
+            elif code >= 2 and code <= 11 or code >= 16 and code <= 25 or code >= 30 and code <= 38 or code >= 44 and code <= 50 or code == 57:
                 inpt += key_lookup
