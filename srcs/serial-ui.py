@@ -3,7 +3,7 @@ import PySimpleGUI as sg
 layout = [[sg.Text("Hello from PySimpleGUI")], [sg.Text("hahaha")], [sg.Button("OK")]]
 
 print("Screen: {}".format(sg.Window.get_screen_size()))
-w, h = sg.Window.get_screen_size()
+w, h = sg.Window.get_screen_size() # get screen width and height
 
 # Create the window
 window = sg.Window(
@@ -11,10 +11,10 @@ window = sg.Window(
             layout,
             background_color = "#f00",
             element_justification = "center",
-            no_titlebar=True,
-            location=(0,0),
-            size=(w, h),
-            keep_on_top=True
+            no_titlebar = True,
+            location= (0, 0),
+            size = (w, h),
+            keep_on_top = True
         ).Finalize()
 window.Maximize()
 
