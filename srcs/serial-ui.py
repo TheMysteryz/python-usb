@@ -81,6 +81,7 @@ window = sg.Window(
 ).Finalize()
 
 window.Maximize()
+window.set_cursor("none")
 
 # Create an event loop
 while True:
