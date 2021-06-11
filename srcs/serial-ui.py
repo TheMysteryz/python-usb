@@ -2,7 +2,10 @@ import PySimpleGUI as sg
 import urllib.request, json
 import time
 
-DATA_URL = "http://192.168.1.19:3000/getdata"
+# home
+#DATA_URL = "http://192.168.1.19:3000/getdata"
+# store
+DATA_URL = "http://192.168.1.12:3000/getdata"
 
 # get datas from serv json
 with urllib.request.urlopen(DATA_URL) as url:
@@ -20,7 +23,7 @@ def cmp_data(q):
         price = format(data[2]) + " €"
 
         if q in code or q in label:
-            
+
             search = code + " " + label + " " +  price
             return [search, code, label, price]
             break
@@ -36,12 +39,14 @@ w, h = sg.Window.get_screen_size()
 BG_COLOR = "#00A2E8"
 SCAN_HERE = ["SCANNEZ VOS ARTICLES", "ICI", ""]
 aa = ""
+my_font = "Arial 58"
+my_font_small = "Arial 29"
 is_wait = False
 
 layout = [
-    [sg.Text(SCAN_HERE[0], size=(50, 1), justification="center", background_color=BG_COLOR, key='-CODE-')],
-    [sg.Text(SCAN_HERE[1], size=(50, 1), justification="center", background_color=BG_COLOR, key='-LABEL-')],
-    [sg.Text(SCAN_HERE[2], size=(50, 1), justification="center", background_color=BG_COLOR, text_color="#ff0", key='-PRICE-')],
+    [sg.Text(SCAN_HERE[0], size=(30, 1), font=my_font, justification="center", background_color=BG_COLOR, key='-CODE-')],
+    [sg.Text(SCAN_HERE[1], size=(30, 2), font=my_font, justification="center", background_color=BG_COLOR, key='-LABEL-')],
+    [sg.Text(SCAN_HERE[2], size=(6, 1), font=my_font, justification="center", background_color=BG_COLOR, text_color="#ff0", key='-PRICE-')],
     [sg.Button("OK", button_color="#f00")],
     [sg.Button("EXIT", button_color="#f00")]
 ]
@@ -54,8 +59,9 @@ window = sg.Window(
     element_justification = "center",
     return_keyboard_events = True,
     no_titlebar = True,
-    location= (0, 0),
-    size = (w, h),
+    location = (0, 0),
+    size = (w, h*2),
+    margins = (0, h/3),
     keep_on_top = True
 ).Finalize()
 
@@ -67,10 +73,11 @@ while True:
     # print event
     if event != "__TIMEOUT__":
         print(event)
-    
+
     # inputs
-    if event == "OK":
-        aa = "99911"
+
+    if event == "OK" or "space" in event:
+        aa = "3660715013473"
 
     # search input in datas
     [text, code, label, price] = cmp_data(aa)
@@ -81,15 +88,15 @@ while True:
         end_time = time.time() + 3
         is_wait = True # to enter reset timer
         print("found: {}".format(text))
-        window['-CODE-'].update(code)
+        window['-CODE-'].update(code, font=my_font_small)
         window['-LABEL-'].update(label)
         window['-PRICE-'].update(price)
 
     # reset timer
     if is_wait and time.time() > end_time:
-        window['-CODE-'].update(SCAN_HERE[0])
-        window['-LABEL-'].update(SCAN_HERE[1])
-        window['-PRICE-'].update(SCAN_HERE[2])
+        window['-CODE-'].update(SCAN_HERE[0], font=my_font)
+        window['-LABEL-'].update(SCAN_HERE[1], font=my_font)
+        window['-PRICE-'].update(SCAN_HERE[2], font=my_font)
         is_wait = False
     # reset vals
     text = ""
@@ -97,7 +104,7 @@ while True:
     # End program if user closes window or
     # presses the EXIT button or
     # ESC key pressed
-    if event == "EXIT" or event == sg.WIN_CLOSED or event == "Escape:27":
+    if event == "EXIT" or event == sg.WIN_CLOSED or "Escape" in event:
         # confirm exit
         if sg.popup_ok_cancel("Exit the program?", keep_on_top=True) == "OK":
             break
