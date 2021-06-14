@@ -26,6 +26,8 @@ def truncate(num):
 
 # func start compare data
 def cmp_data(q):
+    if q == "":
+        return [None, None, None, None]
     with urllib.request.urlopen("http://192.168.1.12:3000?" + q) as url:
         mydata = json.loads(url.read().decode())
         if mydata == "nofound":
