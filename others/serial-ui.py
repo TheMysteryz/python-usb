@@ -78,8 +78,8 @@ window.set_cursor("none")
 while True:
     event, values = window.read(timeout=1000) # timeout 1 sec
     # print event
-    # if event != "__TIMEOUT__":
-    #   print(event)
+    if event != "__TIMEOUT__":
+    	print(event)
 
     # inputs
     if not is_wait:
