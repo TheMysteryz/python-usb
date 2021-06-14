@@ -33,11 +33,11 @@ def cmp_data(q):
         if mydata == "nofound":
             return ["nofound", "Article non trouvé!", "Merci de réessayer ou\nde le signaler,", "A bientôt"]
         else:
-			code = format(data[0])
-	        label = format(data[1]).upper()
-	        fprice = format(data[2])
-	        price = truncate('{:<011}'.format(fprice)) + " €"
-			search = code + " " + label + " " +  price
+            code = format(mydata[0])
+            label = format(mydata[1]).upper()
+            fprice = format(mydata[2])
+            price = truncate('{:<011}'.format(fprice)) + " €"
+            search = code + " " + label + " " +  price
             return [search, code, label, price]
 # end func
 
