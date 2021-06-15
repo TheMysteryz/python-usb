@@ -1,6 +1,3 @@
-cd /home/pi/python-usb
-
-git fetch &
-git pull &
+git -C /home/pi/python-usb pull &
 
 python3 serial-ui.py
