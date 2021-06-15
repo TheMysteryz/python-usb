@@ -3,10 +3,10 @@ import serial
 import urllib.request, json
 import time, re, io, sys
 
-TEST_WITHOUT_SER = True
+TEST_WITHOUT_SER = False
 
 # store
-DATA_URL = "http://192.168.1.19:3000"
+DATA_URL = "http://192.168.1.12:3000"
 DATA_PATH = "/getdata"
 
 # define serial
