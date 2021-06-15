@@ -76,8 +76,8 @@ window = sg.Window(
     return_keyboard_events = True,
     no_titlebar = True,
     location = (0, 0),
-    size = (w, h*2),
-    margins = (200, h/4),
+    size = (w+200, h*2),
+    margins = (0, h/4),
     keep_on_top = True
 ).Finalize()
 
