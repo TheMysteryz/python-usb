@@ -1,22 +1,24 @@
 import PySimpleGUI as sg
 import serial
 import urllib.request, json
-import time, re, io, os
+import time, re, io, sys
 
-# home
-#DATA_URL = "http://192.168.1.19:3000/getdata"
+TEST_WITHOUT_SER = True
+
 # store
-DATA_URL = "http://192.168.1.12:3000/getdata"
+DATA_URL = "http://192.168.1.19:3000"
+DATA_PATH = "/getdata"
 
 # define serial
-ser = serial.Serial()
-ser.port = '/dev/ttyACM0'
-ser.timeout = 1
-ser.open()
-sio = io.TextIOWrapper(io.BufferedRWPair(ser, ser))
+if not TEST_WITHOUT_SER:
+    ser = serial.Serial()
+    ser.port = '/dev/ttyACM0'
+    ser.timeout = 1
+    ser.open()
+    sio = io.TextIOWrapper(io.BufferedRWPair(ser, ser))
 
 # get datas from serv json
-with urllib.request.urlopen(DATA_URL) as url:
+with urllib.request.urlopen(DATA_URL + DATA_PATH) as url:
     datas = json.loads(url.read().decode())
 
 # func start truncate
@@ -28,7 +30,7 @@ def truncate(num):
 def cmp_data(q):
     if q == "":
         return [None, None, None, None]
-    with urllib.request.urlopen("http://192.168.1.12:3000?" + q) as url:
+    with urllib.request.urlopen(DATA_URL + "?" + q) as url:
         mydata = json.loads(url.read().decode())
         if mydata == "nofound":
             return ["nofound", "Article non trouvé!", "Merci de réessayer ou\nde le signaler,", "A bientôt"]
@@ -52,7 +54,10 @@ aa = ""
 my_font = "Arial 58"
 my_font_small = "Arial 29"
 is_wait = False
-filename = r'~/python/img/triangle.png'
+if sys.platform.startswith('win32'):
+    filename = r'E:\Github\python-usb\img\triangle.png'
+elif sys.platform.startswith('linux'):
+    filename = r'~/python/img/triangle.png'
 print(filename)
 
 layout = [
@@ -87,15 +92,16 @@ while True:
     	print(event)
 
     # inputs
-    if not is_wait:
+    if not is_wait and not TEST_WITHOUT_SER:
         while True:
             sio.flush()
             line = sio.readline()
             if line != "":
                 aa = line.strip()
                 break
-    # if event == "OK" or "space" in event:
-    #     aa = "3660715013473"
+    
+    if (event == "OK" or "space" in event or event == " ") and TEST_WITHOUT_SER:
+        aa = "3660715013473"
 
     # search input in datas
     [text, code, label, price] = cmp_data(aa)
@@ -139,5 +145,6 @@ while True:
             break
 
 # close all
-ser.close()
+if not TEST_WITHOUT_SER:
+    ser.close()
 window.close()
