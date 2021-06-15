@@ -49,7 +49,7 @@ w, h = sg.Window.get_screen_size()
 
 # defines
 BG_COLOR = "#00A2E8"
-SCAN_HERE = ["SCANNEZ VOS ARTICLES", "ICI test", ""]
+SCAN_HERE = ["SCANNEZ VOS ARTICLES", "ICI", ""]
 aa = ""
 my_font = "Arial 58"
 my_font_small = "Arial 29"
@@ -76,7 +76,7 @@ window = sg.Window(
     return_keyboard_events = True,
     no_titlebar = True,
     location = (0, 0),
-    size = (w+200, h*2),
+    size = (w+300, h*2),
     margins = (0, h/4),
     keep_on_top = True
 ).Finalize()
