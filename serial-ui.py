@@ -77,7 +77,7 @@ window = sg.Window(
     no_titlebar = True,
     location = (0, 0),
     size = (w, h*2),
-    margins = (0, h/4),
+    margins = (200, h/4),
     keep_on_top = True
 ).Finalize()
 
@@ -99,7 +99,7 @@ while True:
             if line != "":
                 aa = line.strip()
                 break
-    
+
     if (event == "OK" or "space" in event or event == " ") and TEST_WITHOUT_SER:
         aa = "3660715013473"
 
