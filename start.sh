@@ -1,3 +1,5 @@
+cd /home/pi/python-usb
+
 git fetch
 git pull
 
