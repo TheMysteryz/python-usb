@@ -1,5 +1,4 @@
-git -C /home/pi/python-usb pull &
-
-pwd > /home/pi/log
-
+cd /home/pi/python-usb &&
+git fetch &&
+git pull &&
 python3 serial-ui.py
