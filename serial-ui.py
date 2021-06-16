@@ -52,7 +52,7 @@ BG_COLOR = "#00A2E8"
 SCAN_HERE = ["SCANNEZ VOS ARTICLES", "ICI", ""]
 aa = ""
 my_font = "Arial 72"
-my_font_small = "Arial 36"
+my_font_small = "Arial 54"
 is_wait = False
 if sys.platform.startswith('win32'):
     filename = r'E:\Github\python-usb\img\triangle.png'
