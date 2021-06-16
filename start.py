@@ -12,7 +12,7 @@ subprocess.Popen(["/usr/bin/git", "--git-dir=/home/pi/python-usb/.git/", "--work
 
 if not TEST_MODE:
     # run script
-    theproc = subprocess.Popen([sys.executable, "serial-ui.py"])
+    theproc = subprocess.Popen([sys.executable, "/home/pi/python-usb/serial-ui.py"])
     theproc.communicate()
 else:
     print("/!\\ In Test Mode")
