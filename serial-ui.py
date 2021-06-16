@@ -51,8 +51,8 @@ w, h = sg.Window.get_screen_size()
 BG_COLOR = "#00A2E8"
 SCAN_HERE = ["SCANNEZ VOS ARTICLES", "ICI", ""]
 aa = ""
-my_font = "Arial 58"
-my_font_small = "Arial 29"
+my_font = "Arial 64"
+my_font_small = "Arial 32"
 is_wait = False
 if sys.platform.startswith('win32'):
     filename = r'E:\Github\python-usb\img\triangle.png'
