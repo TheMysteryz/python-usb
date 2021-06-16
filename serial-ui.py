@@ -49,7 +49,7 @@ w, h = sg.Window.get_screen_size()
 
 # defines
 BG_COLOR = "#00A2E8"
-SCAN_HERE = ["SCANNEZ VOS ARTICLES", "ICI test", ""]
+SCAN_HERE = ["SCANNEZ VOS ARTICLES", "ICI", ""]
 aa = ""
 my_font = "Arial 58"
 my_font_small = "Arial 29"
