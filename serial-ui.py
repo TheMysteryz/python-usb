@@ -57,7 +57,7 @@ is_wait = False
 if sys.platform.startswith('win32'):
     filename = r'E:\Github\python-usb\img\triangle.png'
 elif sys.platform.startswith('linux'):
-    filename = r'~/python/img/triangle.png'
+    filename = r'~/python-usb/img/triangle.png'
 print(filename)
 
 layout = [
