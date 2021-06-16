@@ -61,9 +61,9 @@ elif sys.platform.startswith('linux'):
 print(filename)
 
 layout = [
-    [sg.Text(SCAN_HERE[0], size=(20, 1), font=my_font, justification="center", background_color=BG_COLOR, key='-CODE-')],
-    [sg.Text(SCAN_HERE[1], size=(20, 2), font=my_font, justification="center", background_color=BG_COLOR, key='-LABEL-')],
-    [sg.Text(SCAN_HERE[2], size=(20, 1), font=my_font, justification="center", background_color=BG_COLOR, text_color="#ff0", key='-PRICE-')],
+    [sg.Text(SCAN_HERE[0], size=(22, 1), font=my_font, justification="center", background_color=BG_COLOR, key='-CODE-')],
+    [sg.Text(SCAN_HERE[1], size=(22, 2), font=my_font, justification="center", background_color=BG_COLOR, key='-LABEL-')],
+    [sg.Text(SCAN_HERE[2], size=(22, 1), font=my_font, justification="center", background_color=BG_COLOR, text_color="#ff0", key='-PRICE-')],
     [sg.Image(filename, key='-IMAGE-')]
 ]
 
