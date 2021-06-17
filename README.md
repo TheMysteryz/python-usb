@@ -7,4 +7,3 @@ use serial port scanner and search in database using python3
 `pip3 install`
 - PySimpleGUI
 - pyserial
-- python-git
