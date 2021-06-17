@@ -18,8 +18,14 @@ if not TEST_WITHOUT_SER:
     sio = io.TextIOWrapper(io.BufferedRWPair(ser, ser))
 
 # get datas from serv json
-with urllib.request.urlopen(DATA_URL + DATA_PATH) as url:
-    datas = json.loads(url.read().decode())
+try:
+    with urllib.request.urlopen(DATA_URL + DATA_PATH) as url:
+        datas = json.loads(url.read().decode())
+        print(datas)
+except urllib.error.URLError as exception:
+    print("URL err: {}".format(exception))
+except urllib.error.HTTPError as exception:
+    print("HTTP err: {}".format(exception))
 
 # func start truncate
 def truncate(num):
@@ -30,17 +36,24 @@ def truncate(num):
 def cmp_data(q):
     if q == "":
         return [None, None, None, None]
-    with urllib.request.urlopen(DATA_URL + "?" + q) as url:
-        mydata = json.loads(url.read().decode())
-        if mydata == "nofound":
-            return ["nofound", "Article non trouvé!", "Merci de réessayer ou\nde le signaler,", "A bientôt"]
-        else:
-            code = format(mydata[0])
-            label = format(mydata[1]).upper()
-            fprice = format(mydata[2])
-            price = truncate('{:<011}'.format(fprice)) + " €"
-            search = code + " " + label + " " +  price
-            return [search, code, label, price]
+    try:
+        with urllib.request.urlopen(DATA_URL + "?" + q) as url:
+            mydata = json.loads(url.read().decode())
+            if mydata == "nofound":
+                return ["nofound", "Article non trouvé!", "Merci de réessayer ou\nde le signaler,", "A bientôt"]
+            else:
+                code = format(mydata[0])
+                label = format(mydata[1]).upper()
+                fprice = format(mydata[2])
+                price = truncate('{:<011}'.format(fprice)) + " €"
+                search = code + " " + label + " " +  price
+                return [search, code, label, price]
+    except urllib.error.URLError as exception:
+        print("URL err: {}".format(exception))
+        return ["noserv", "/!\\ Server down /!\\", "Please repport it!", "Thanks you"]
+    except urllib.error.HTTPError as exception:
+        print("HTTP err: {}".format(exception))
+        return ["noserv", "/!\\ Server down /!\\", "Please repport it!", "Thanks you"]
 # end func
 
 # get screen width and height
@@ -107,7 +120,16 @@ while True:
     [text, code, label, price] = cmp_data(aa)
 
     # when data founds
-    if text == "nofound":
+    if text == "noserv": # server down
+        # add 3 sec on end_time
+        end_time = time.time() + 3
+        is_wait = True # to enter reset timer
+        print("{}".format(text))
+        window['-CODE-'].update(code, text_color="#ff0")
+        window['-LABEL-'].update(label, font=my_font_small)
+        window['-PRICE-'].update(price, font=my_font_small, text_color="#fff")
+        window['-IMAGE-'].update(visible=False)
+    if text == "nofound": # no found
         # add 3 sec on end_time
         end_time = time.time() + 3
         is_wait = True # to enter reset timer
@@ -116,7 +138,7 @@ while True:
         window['-LABEL-'].update(label)
         window['-PRICE-'].update(price, font=my_font_small, text_color="#fff")
         window['-IMAGE-'].update(visible=False)
-    elif text:
+    elif text: # found data
         # add 3 sec on end_time
         end_time = time.time() + 3
         is_wait = True # to enter reset timer
