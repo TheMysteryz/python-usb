@@ -21,7 +21,6 @@ if not TEST_WITHOUT_SER:
 try:
     with urllib.request.urlopen(DATA_URL + DATA_PATH) as url:
         datas = json.loads(url.read().decode())
-        print(datas)
 except urllib.error.URLError as exception:
     print("URL err: {}".format(exception))
 except urllib.error.HTTPError as exception:
