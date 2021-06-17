@@ -11,11 +11,15 @@ DATA_PATH = "/getdata"
 
 # define serial
 if not TEST_WITHOUT_SER:
-    ser = serial.Serial()
-    ser.port = '/dev/ttyACM0'
-    ser.timeout = 1
-    ser.open()
-    sio = io.TextIOWrapper(io.BufferedRWPair(ser, ser))
+    try:
+        ser = serial.Serial()
+        ser.port = '/dev/ttyACM0'
+        ser.timeout = 1
+        ser.open()
+        sio = io.TextIOWrapper(io.BufferedRWPair(ser, ser))
+    except:
+        print("[ERR_DEVICE]: No scanner! start test mode...")
+        TEST_WITHOUT_SER = True
 
 # get datas from serv json
 try:
