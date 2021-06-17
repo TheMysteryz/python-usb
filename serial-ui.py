@@ -21,15 +21,6 @@ if not TEST_WITHOUT_SER:
         print("[ERR_DEVICE]: No scanner! start test mode...")
         TEST_WITHOUT_SER = True
 
-# get datas from serv json
-try:
-    with urllib.request.urlopen(DATA_URL + DATA_PATH) as url:
-        datas = json.loads(url.read().decode())
-except urllib.error.URLError as exception:
-    print("URL err: {}".format(exception))
-except urllib.error.HTTPError as exception:
-    print("HTTP err: {}".format(exception))
-
 # func start truncate
 def truncate(num):
     return re.sub(r'^(\d+\.\d{,2})\d*$',r'\1',str(num))
