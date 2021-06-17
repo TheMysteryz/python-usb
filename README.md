@@ -2,7 +2,7 @@
 
 use serial port scanner and search in database using python3
 
-## needed
+## Dependency
 
 `pip3 install`
 - PySimpleGUI
