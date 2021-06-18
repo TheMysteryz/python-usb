@@ -114,9 +114,10 @@ while True:
     [text, code, label, price] = cmp_data(aa)
 
     # write logs
-    if code != None and label != None: 
+    if code != None and label != None:
         log_file = open("/home/pi/log", "a")
-        log_file.write("["+str(time.time())+"]: scanned <"+str(code)+"> | <"+str(label)+">\n")
+		log_time = time.asctime( time.localtime(time.time()) )
+        log_file.write("["+str(log_time)+"]: scanned <"+str(code)+"> | <"+str(label)+">\n")
         log_file.close();
 
     # when data founds
