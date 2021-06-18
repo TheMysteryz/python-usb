@@ -116,7 +116,7 @@ while True:
     # write logs
     if code != None and label != None:
         log_file = open("/home/pi/log", "a")
-		log_time = time.asctime( time.localtime(time.time()) )
+        log_time = time.asctime(time.localtime(time.time()))
         log_file.write("["+str(log_time)+"]: scanned <"+str(code)+"> | <"+str(label)+">\n")
         log_file.close();
 
