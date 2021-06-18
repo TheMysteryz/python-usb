@@ -113,10 +113,11 @@ while True:
     # search input in datas
     [text, code, label, price] = cmp_data(aa)
 
-	# write logs
-	log_file = open("/home/pi/log", "a")
-	log_file.write("["+time.time()+"]: scanned <"+code+"> | <"+label+">")
-	log_file.close();
+    # write logs
+    if code != None and label != None: 
+        log_file = open("/home/pi/log", "a")
+        log_file.write("["+str(time.time())+"]: scanned <"+str(code)+"> | <"+str(label)+">\n")
+        log_file.close();
 
     # when data founds
     if text == "noserv": # server down
