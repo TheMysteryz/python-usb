@@ -117,7 +117,9 @@ while True:
     if code != None and label != None:
         log_file = open("/home/pi/log", "a")
         log_time = time.asctime(time.localtime(time.time()))
-        log_file.write("["+str(log_time)+"]: scanned <"+str(code)+"> | <"+str(label)+">\n")
+		log_code = aa
+		log_label = (text == "nofound" ? code : label)
+        log_file.write("["+str(log_time)+"]: scanned <"+str(log_code)+"> | <"+str(log_label)+">\n")
         log_file.close();
 
     # when data founds
