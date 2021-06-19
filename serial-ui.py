@@ -118,7 +118,7 @@ while True:
         log_file = open("/home/pi/log", "a")
         log_time = time.asctime(time.localtime(time.time()))
         log_code = aa
-        log_label = code if text == "nofound" else label
+        log_label = text if text == "nofound" else label
         log_file.write("["+str(log_time)+"]: scanned <"+str(log_code)+"> | <"+str(log_label)+">\n")
         log_file.close();
 
