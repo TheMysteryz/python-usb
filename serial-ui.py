@@ -18,7 +18,7 @@ if not TEST_WITHOUT_SER:
         ser.open()
         sio = io.TextIOWrapper(io.BufferedRWPair(ser, ser))
     except:
-        print("[ERR_DEVICE]: No scanner! start test mode...")
+        print("[ERR_DEVICE]: No scanner device! starting test mode...")
         TEST_WITHOUT_SER = True
 
 # func start truncate
@@ -44,10 +44,10 @@ def cmp_data(q):
                 return [search, code, label, price]
     except urllib.error.URLError as exception:
         print("URL err: {}".format(exception))
-        return ["noserv", "/!\\ Server down /!\\", "Please repport it!", "Thanks you"]
+        return ["noserv", "/!\\ Server is down /!\\", "Please report it!", "Thank you"]
     except urllib.error.HTTPError as exception:
         print("HTTP err: {}".format(exception))
-        return ["noserv", "/!\\ Server down /!\\", "Please repport it!", "Thanks you"]
+        return ["noserv", "/!\\ Server is down /!\\", "Please report it!", "Thank you"]
 # end func
 
 # get screen width and height
@@ -83,9 +83,9 @@ window = sg.Window(
     return_keyboard_events = True,
     no_titlebar = True,
     location = (0, 0),
-    size = (w+350, h*2),
-    margins = (0, h/4),
-    keep_on_top = True
+    size = (w+350, h*2), # item place 350p at right, height x2 for more space and visibility
+    margins = (0, h/4), # margin top a bit
+    keep_on_top = True # keep window forward
 ).Finalize()
 
 window.Maximize()
@@ -107,6 +107,7 @@ while True:
                 aa = line.strip()
                 break
 
+	# in test mode
     if (event == "OK" or "space" in event or event == " ") and TEST_WITHOUT_SER:
         aa = "3660715013473"
 
