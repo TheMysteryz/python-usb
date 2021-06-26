@@ -31,7 +31,7 @@ def cmp_data(q):
     if q == "":
         return [None, None, None, None]
     try:
-        with urllib.request.urlopen(DATA_URL + "?" + q) as url:
+        with urllib.request.urlopen(DATA_URL + "?" + q, timeout=5) as url:
             mydata = json.loads(url.read().decode())
             if mydata == "nofound":
                 return ["nofound", "Article non trouvé!", "Merci de réessayer ou\nde le signaler,", "A bientôt"]
@@ -44,10 +44,9 @@ def cmp_data(q):
                 return [search, code, label, price]
     except urllib.error.URLError as exception:
         print("URL err: {}".format(exception))
-        return ["noserv", "/!\\ Server is down /!\\", "Please report it!", "Thank you"]
     except urllib.error.HTTPError as exception:
         print("HTTP err: {}".format(exception))
-        return ["noserv", "/!\\ Server is down /!\\", "Please report it!", "Thank you"]
+    return ["noserv", "/!\\ Server is down /!\\", "Please report it!", "Thank you"]
 # end func
 
 # get screen width and height
@@ -106,8 +105,8 @@ while True:
             if line != "":
                 aa = line.strip()
                 break
-
-	# in test mode
+    
+    # in test mode
     if (event == "OK" or "space" in event or event == " ") and TEST_WITHOUT_SER:
         aa = "3660715013473"
 
