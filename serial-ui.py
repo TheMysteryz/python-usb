@@ -31,7 +31,7 @@ def cmp_data(q):
     if q == "":
         return [None, None, None, None]
     try:
-        with urllib.request.urlopen(DATA_URL + "?" + q, timeout=5) as url:
+        with urllib.request.urlopen(DATA_URL + "?" + q, timeout=3) as url:
             mydata = json.loads(url.read().decode())
             if mydata == "nofound":
                 return ["nofound", "Article non trouvé!", "Merci de réessayer ou\nde le signaler,", "A bientôt"]
@@ -50,8 +50,8 @@ def cmp_data(q):
 # end func
 
 # get screen width and height
-print("Screen: {}".format(sg.Window.get_screen_size()))
 w, h = sg.Window.get_screen_size()
+print("Screen: {} x {}".format(w, h))
 
 # defines
 BG_COLOR = "#00A2E8"
@@ -61,10 +61,12 @@ my_font = "Arial 72"
 my_font_small = "Arial 54"
 is_wait = False
 if sys.platform.startswith('win32'):
-    filename = r'E:\Github\python-usb\img\triangle.png'
+    filename = r'E:\\Github\\python-usb\\img\\triangle.png'
+    log_path = r'E:\\Github\\log'
 elif sys.platform.startswith('linux'):
     filename = r'~/python-usb/img/triangle.png'
-print(filename)
+    log_path = r'~/log'
+print("path:\n", filename, "\n", log_path)
 
 layout = [
     [sg.Text(SCAN_HERE[0], size=(22, 1), font=my_font, justification="center", background_color=BG_COLOR, key='-CODE-')],
@@ -115,10 +117,10 @@ while True:
 
     # write logs
     if code != None and label != None:
-        log_file = open("/home/pi/log", "a")
-        log_time = time.asctime(time.localtime(time.time()))
+        log_file = open(log_path, "a")
+        log_time = time.asctime(time.localtime(time.time())) # local time
         log_code = aa
-        log_label = text if text == "nofound" else label
+        log_label = text if text == "nofound" or text == "noserv" else label
         log_file.write("["+str(log_time)+"]: scanned <"+str(log_code)+"> | <"+str(log_label)+">\n")
         log_file.close();
 
