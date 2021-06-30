@@ -64,8 +64,8 @@ if sys.platform.startswith('win32'):
     filename = r'E:\\Github\\python-usb\\img\\triangle.png'
     log_path = r'E:\\Github\\log'
 elif sys.platform.startswith('linux'):
-    filename = r'~/python-usb/img/triangle.png'
-    log_path = r'~/log'
+    filename = r'/home/pi/python-usb/img/triangle.png'
+    log_path = r'/home/pi/log'
 print("path:\n", filename, "\n", log_path)
 
 layout = [
@@ -107,7 +107,7 @@ while True:
             if line != "":
                 aa = line.strip()
                 break
-    
+
     # in test mode
     if (event == "OK" or "space" in event or event == " ") and TEST_WITHOUT_SER:
         aa = "3660715013473"
