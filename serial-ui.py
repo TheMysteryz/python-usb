@@ -1,6 +1,7 @@
 import PySimpleGUI as sg
 import serial
-import urllib.request, json
+import urllib.request, urllib.error
+import json
 import time, re, io, sys
 
 TEST_WITHOUT_SER = False
