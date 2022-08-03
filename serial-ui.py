@@ -56,7 +56,7 @@ print("Screen: {} x {}".format(w, h))
 
 # defines
 BG_COLOR = "#00A2E8"
-SCAN_HERE = ["SCANNEZ VOS ARTICLES", "ICI", ""]
+SCAN_HERE = ["SCANNEZ VOS ARTICLES", "ICI", "(et patientez)"]
 aa = ""
 my_font = "Arial 72"
 my_font_small = "Arial 54"
@@ -72,7 +72,7 @@ print("path:\n", filename, "\n", log_path)
 layout = [
     [sg.Text(SCAN_HERE[0], size=(22, 1), font=my_font, justification="center", background_color=BG_COLOR, key='-CODE-')],
     [sg.Text(SCAN_HERE[1], size=(22, 2), font=my_font, justification="center", background_color=BG_COLOR, key='-LABEL-')],
-    [sg.Text(SCAN_HERE[2], size=(22, 1), font=my_font, justification="center", background_color=BG_COLOR, text_color="#ff0", key='-PRICE-')],
+    [sg.Text(SCAN_HERE[2], size=(22, 1), font=my_font_small, justification="center", background_color=BG_COLOR, text_color="#ff0", key='-PRICE-')],
     [sg.Image(filename, key='-IMAGE-')]
 ]
 
@@ -101,17 +101,13 @@ while True:
     	print(event)
 
     # inputs
-    if not is_wait and not TEST_WITHOUT_SER and aa == "":
+    if not is_wait and not TEST_WITHOUT_SER:
         while True:
             sio.flush()
             line = sio.readline()
             if line != "":
                 aa = line.strip()
-                window['-CODE-'].update("", font=my_font, text_color="#fff")
-                window['-LABEL-'].update("Chargement...", font=my_font, text_color="#fff")
-                window['-PRICE-'].update("", font=my_font, text_color="#fff")
-                window['-IMAGE-'].update(visible=False)
-                continue
+                break
 
     # in test mode
     if (event == "OK" or "space" in event or event == " ") and TEST_WITHOUT_SER:
@@ -155,14 +151,14 @@ while True:
         print("found: {}".format(text))
         window['-CODE-'].update(code, font=my_font_small)
         window['-LABEL-'].update(label)
-        window['-PRICE-'].update(price)
+        window['-PRICE-'].update(price, font=my_font)
         window['-IMAGE-'].update(visible=False)
 
     # reset timer
     if is_wait and time.time() > end_time:
         window['-CODE-'].update(SCAN_HERE[0], font=my_font, text_color="#fff")
         window['-LABEL-'].update(SCAN_HERE[1], font=my_font, text_color="#fff")
-        window['-PRICE-'].update(SCAN_HERE[2], font=my_font, text_color="#ff0")
+        window['-PRICE-'].update(SCAN_HERE[2], font=my_font_small, text_color="#ff0")
         window['-IMAGE-'].update(visible=True)
         is_wait = False
     # reset vals
