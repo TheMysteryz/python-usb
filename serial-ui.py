@@ -101,13 +101,17 @@ while True:
     	print(event)
 
     # inputs
-    if not is_wait and not TEST_WITHOUT_SER:
+    if not is_wait and not TEST_WITHOUT_SER and aa == "":
         while True:
             sio.flush()
             line = sio.readline()
             if line != "":
                 aa = line.strip()
-                break
+                window['-CODE-'].update("", font=my_font, text_color="#fff")
+                window['-LABEL-'].update("Chargement...", font=my_font, text_color="#fff")
+                window['-PRICE-'].update("", font=my_font, text_color="#fff")
+                window['-IMAGE-'].update(visible=False)
+                continue
 
     # in test mode
     if (event == "OK" or "space" in event or event == " ") and TEST_WITHOUT_SER:
